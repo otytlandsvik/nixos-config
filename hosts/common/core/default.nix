@@ -24,4 +24,6 @@
     options = "grp:win_space_toggle";
   };
 
+  # Login manager
+  programs.regreet.enable = true;
 }

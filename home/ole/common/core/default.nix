@@ -4,6 +4,7 @@
     # Packages with custom configs
     ./git.nix
     ./nixvim
+    ./fonts.nix
   ]; # ++ (builtins.attrValues outputs.homeManagerModules);
 
   # Let home manager install and manage itself
