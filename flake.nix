@@ -22,17 +22,30 @@
 
   outputs = { self, nixpkgs, ... }@inputs: 
   let
+    inherit (self) outputs;
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
+    specialArgs = { inherit inputs outputs nixpkgs; };
   in
   {
 
     nixosConfigurations = {
       beiste = nixpkgs.lib.nixosSystem {
-        specialArgs = { inherit inputs; };
+        inherit specialArgs;
         modules = [
+          inputs.home-manager.nixosModules.home-manager{
+            home-manager.extraSpecialArgs = specialArgs;
+          }
           ./hosts/beiste
-          inputs.home-manager.nixosModules.default
+        ];
+      };
+      bubbles = nixpkgs.lib.nixosSystem {
+        inherit specialArgs;
+        modules = [
+          inputs.home-manager.nixosModules.home-manager{
+            home-manager.extraSpecialArgs = specialArgs;
+          }
+          ./hosts/bubbles
         ];
       };
     };
