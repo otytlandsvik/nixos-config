@@ -29,6 +29,7 @@
       
       eza # ls replacement
       fzf # Fuzzy find
+      lazygit # git GUI for the terminal
       pfetch; # System info
   };
 
