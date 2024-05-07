@@ -30,6 +30,7 @@
       eza # ls replacement
       fzf # Fuzzy find
       lazygit # git GUI for the terminal
+      ripgrep # grep goodness
       pfetch; # System info
   };
 
