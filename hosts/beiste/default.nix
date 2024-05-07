@@ -24,7 +24,7 @@
   # Bootloader.
   boot.loader.grub = {
     enable = true;
-    device = "/dev/sda:";
+    device = "/dev/sdc";
     useOSProber = true;
   };
 
