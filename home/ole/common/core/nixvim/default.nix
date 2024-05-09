@@ -1,9 +1,8 @@
-{ inputs, ... }: {
+{ inputs, pkgs, ... }: {
 
   imports = [
     inputs.nixvim.homeManagerModules.nixvim
   ];
-
   programs.nixvim = {
     enable = true;
     enableMan = true;
@@ -15,15 +14,12 @@
 
     options = {
       relativenumber = true;
-      # showcmd = true; # Show incomplete commands on bottom bar
-      # showmode = true; # Show current mode on bottom bar
       autoread = true; # Reload files changed outside vim
       lazyredraw = true; # Redraw lazily
-      # visualbell = true; # No sounds
 
       # Indentation
       # autoindent = true;
-      # cindent = true; # Automatically indent braces
+      cindent = true; # Automatically indent braces
       # smartindent = true;
       # smarttab = true;
       shiftwidth = 2;
@@ -32,7 +28,20 @@
       # expandtab = true;
     };
 
-    globals.mapleader = " "; # Set leader key to space
+    extraConfigLua = ''
+      -- Timeout before keybind is triggered
+      vim.opt.timeoutlen = 250
+
+      -- Setup extra plugins
+      require("autoclose").setup({
+	  options = {
+	    pair_spaces = true;
+	  }})
+      require("luasnip").setup({})
+      '';
+
+    # Set leader key to space
+    globals.mapleader = " "; 
 
     ############### Plugins ###############
     plugins = {
@@ -71,7 +80,7 @@
       };
 
       # Handy code snippets
-      luasnip.enable = true;
+      # luasnip.enable = true;
 
       # Completion engine
       cmp_luasnip.enable = true;
@@ -111,11 +120,13 @@
       };
 
       # Status bar
-      # airline = {
-      #   enable = true;
-      #   powerline = true;
-      # };
       lualine.enable = true;
+
+      # Bufferline (showing open buffers)
+      bufferline = {
+	enable = true;
+	diagnostics = "nvim_lsp"; # Show lsp warnings
+      };
 
       # Filetree viewer
       neo-tree =  {
@@ -125,11 +136,29 @@
       # File search
       telescope = {
         enable = true;
-	      extensions.fzy-native.enable = true;
+	extensions.fzy-native.enable = true;
+	# NOTE: Keymaps are simply remapped to "<cmd>Telescope <action><CR>"
+	keymaps = {
+	  "<leader>ff" = {
+	    desc = "Find files";
+	    action = "find_files";
+	  };
+	  "<leader>fg" = {
+	    desc = "Find with grep";
+	    action = "live_grep";
+	  };
+	  "<leader>fb" = {
+	    desc = "Find buffers";
+	    action = "buffers";
+	  };
+	};
       };
 
       # Treesitter
-      # treesitter.enable = true;
+      treesitter.enable = true;
+
+      # Leader popup suggestions
+      which-key.enable = true;
 
       # Display color code colors
       nvim-colorizer = {
@@ -137,18 +166,83 @@
 	      fileTypes = [ "*" ];
       };
 
+
       # Notification UI
-      # fidget = {
-      #   enable = true;
-      #   text.spinner = "triangle";
-      # };
+      fidget = {
+	enable = true;
+	text.spinner = "triangle";
+      };
     };
 
+    # Plugins that aren't exposed through nixvim
+    extraPlugins = builtins.attrValues {
+    inherit (pkgs.vimPlugins)
+
+      luasnip
+      autoclose-nvim; # Automatically close brackets
+    };
+
+    # Keymaps
     keymaps = [
+      # Neo-tree
       {
-        action = "<cmd>Telescope live_grep<CR>";
-	key = "<leader>fg";
+	key = "<leader>e";
+	action = "<cmd>Neotree toggle<CR>";
+	options.desc = "Toggle neo-tree";
+      }
+      # Buffers
+      {
+	mode = [ "n" ];
+	key = "H";
+	action = "<cmd>bprev<CR>";
+      }
+      {
+	mode = [ "n" ];
+	key = "L";
+	action = "<cmd>bnext<CR>";
+      }
+      {
+	key = "<leader>bd";
+	action = "<cmd>bd<CR>";
+	options.desc = "Delete current buffer";
+      }
+      # Windows
+      {
+        mode = [ "n" ];
+	key = "<C-h>";
+	action = "<C-w>h";
+      }
+      {
+        mode = [ "n" ];
+	key = "<C-j>";
+	action = "<C-w>j";
+      }
+      {
+        mode = [ "n" ];
+	key = "<C-k>";
+	action = "<C-w>k";
+      }
+      {
+        mode = [ "n" ];
+	key = "<C-l>";
+	action = "<C-w>l";
+      }
+      {
+	key = "<leader>wc";
+	action = "<cmd>close<CR>";
+	options.desc = "Close current window";
+      }
+      {
+	key = "<leader>|";
+	action = "<cmd>vsplit";
+	options.desc = "Create new window, vertical split";
+      }
+      {
+	key = "<leader>-";
+	action = "<cmd>hsplit";
+	options.desc = "Create new window, horizontal split";
       }
     ];
+
   };
 }
