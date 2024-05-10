@@ -2,13 +2,33 @@
 {
 # NOTE: Sway may already be enabled from /hosts/ config
 
+  # Sway related packages
+  home.packages = with pkgs; [
+    wl-clipboard # Clipboard manager
+    shotman # Screenshot utility
+  ];
+
   wayland.windowManager.sway = {
     enable = true;
     package = null;
 
-    config = rec {
+    config = {
       modifier = "Mod4";
       terminal = "alacritty";
+
+      keybindings = 
+	let
+	  cfg = config.wayland.windowManager.sway.config;
+	  mod = cfg.modifier;
+	in
+	# NOTE: mkOptionDefault to extend/override instead of overwriting all keybindings
+	lib.mkOptionDefault {
+	  # Engage swaylock
+	  "${mod}+Ctrl+l" = "exec swaylock -c 000000";
+
+	  # Screenshots
+	  "Print" = "exec shotman -c region";
+	};
     };
   };
 
@@ -24,10 +44,4 @@
       effect-blur = "7x5";
     };
   };
-
-  # systemd.user.services.swaylock = {
-  #   Unit.Description = "Lock Screen";
-  #   Service.ExecStart = "${config.programs.swaylock.package}/bin/swaylock";
-  # };
-
 }
