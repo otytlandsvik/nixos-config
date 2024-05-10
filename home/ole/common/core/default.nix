@@ -3,6 +3,7 @@
   imports = [
     # Packages with custom configs
     ./git.nix
+    ./lazygit.nix
     ./nixvim
     ./fonts.nix
   ]; # ++ (builtins.attrValues outputs.homeManagerModules);
@@ -29,7 +30,7 @@
       
       eza # ls replacement
       fzf # Fuzzy find
-      lazygit # git GUI for the terminal
+      delta # Diff pager for git
       ripgrep # grep goodness
       pfetch; # System info
   };
