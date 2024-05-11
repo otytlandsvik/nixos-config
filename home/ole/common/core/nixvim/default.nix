@@ -14,6 +14,7 @@
 
     options = {
       relativenumber = true;
+      number = true; # Show actual line number instead of 0
       autoread = true; # Reload files changed outside vim
       lazyredraw = true; # Redraw lazily
 
@@ -33,11 +34,11 @@
       vim.opt.timeoutlen = 250
 
       -- Setup extra plugins
+      require("Comment").setup()
       require("autoclose").setup({
-	  options = {
-	    pair_spaces = true;
-	  }})
-      require("luasnip").setup({})
+        options = {
+	  pair_spaces = true;
+	}})
       '';
 
     # Set leader key to space
@@ -80,16 +81,22 @@
       };
 
       # Handy code snippets
-      # luasnip.enable = true;
+      luasnip = {
+	enable = true;
+	fromVscode = [
+	  {}
+	];
+      };
 
       # Completion engine
-      cmp_luasnip.enable = true;
       cmp-nvim-lsp.enable = true;
+      cmp-path.enable = true;
+      cmp-buffer.enable = true;
+      cmp_luasnip.enable = true;
 
       nvim-cmp = {
         enable = true;
         autoEnableSources = true;
-	# snippet.expand = "luasnip";
         sources = [
           {name = "nvim_lsp";}
           {name = "path";}
@@ -99,6 +106,30 @@
 
         mapping = {
           "<CR>" = "cmp.mapping.confirm({ select = true })";
+	  "<Up>" = {
+	      action = ''
+	      function(fallback)
+		if cmp.visible() then
+		  cmp.select_prev_item()
+		else
+		  fallback()
+		end
+	      end
+	    '';
+	    modes = [ "i" "s"];
+	    };
+	  "<Down>" = {
+	      action = ''
+	      function(fallback)
+		if cmp.visible() then
+		  cmp.select_next_item()
+		else
+		  fallback()
+		end
+	      end
+	    '';
+	    modes = [ "i" "s"];
+	    };
           "<Tab>" = {
             action = ''
               function(fallback)
@@ -176,10 +207,10 @@
 
     # Plugins that aren't exposed through nixvim
     extraPlugins = builtins.attrValues {
-    inherit (pkgs.vimPlugins)
-
-      luasnip
-      autoclose-nvim; # Automatically close brackets
+      inherit (pkgs.vimPlugins)
+	comment-nvim # Comment utilities
+	friendly-snippets # Snippets for luasnip
+        autoclose-nvim; # Automatically close braces
     };
 
     # Keymaps
