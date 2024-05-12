@@ -16,6 +16,15 @@
       modifier = "Mod4";
       terminal = "alacritty";
 
+      # Sway overrides xkb config from system
+      input = {
+	"type:keyboard" = {
+	  xkb_layout = "us,no";
+	  xkb_variant = "altgr-intl,";
+	  xkb_options = "grp:win_space_toggle";
+	};
+      };
+
       keybindings = 
 	let
 	  cfg = config.wayland.windowManager.sway.config;
