@@ -2,7 +2,6 @@
 
   imports = [
     inputs.nixvim.homeManagerModules.nixvim
-    ./formatters.nix
   ];
   programs.nixvim = {
     enable = true;
@@ -13,8 +12,8 @@
 
     colorschemes.tokyonight.enable = true;
 
-    options = {
-      number = true; # Show actual line number instead of 0
+    opts = {
+      number = true; # Absolute line number on current line
       relativenumber = true; # Relative line numbers
       autoread = true; # Reload files changed outside vim
       lazyredraw = true; # Redraw lazily
@@ -46,19 +45,19 @@
           nil_ls.enable = true;
 
           # F#
-          # fsautocomplete.enable = true;
+          fsautocomplete.enable = true;
 
           # Dockerfile
-          # dockerls.enable = true;
+          dockerls.enable = true;
 
           # js/ts
           tsserver.enable = true;
 
           # CSS
-          # cssls.enable = true;
+          cssls.enable = true;
 
           # golang
-          # gopls.enable = true;
+          gopls.enable = true;
 
           # C/C++
           ccls.enable = true;
@@ -67,7 +66,7 @@
           pylsp.enable = true;
 
           # Typst
-          # typst-lsp.enable = true;
+          typst-lsp.enable = true;
         };
       };
 
@@ -79,66 +78,64 @@
 	];
       };
 
+      friendly-snippets.enable = true;
+
       # Completion engine
       cmp-nvim-lsp.enable = true;
       cmp-path.enable = true;
       cmp-buffer.enable = true;
       cmp_luasnip.enable = true;
 
-      nvim-cmp = {
+      cmp = {
         enable = true;
         autoEnableSources = true;
-        sources = [
-          {name = "nvim_lsp";}
-          {name = "path";}
-          {name = "buffer";}
-          {name = "luasnip";}
-        ];
 
-        mapping = {
-          "<CR>" = "cmp.mapping.confirm({ select = true })";
-	  "<Up>" = {
-	      action = ''
-	      function(fallback)
-		if cmp.visible() then
-		  cmp.select_prev_item()
-		else
-		  fallback()
-		end
-	      end
-	    '';
-	    modes = [ "i" "s"];
-	    };
-	  "<Down>" = {
-	      action = ''
-	      function(fallback)
-		if cmp.visible() then
-		  cmp.select_next_item()
-		else
-		  fallback()
-		end
-	      end
-	    '';
-	    modes = [ "i" "s"];
-	    };
-          "<Tab>" = {
-            action = ''
-              function(fallback)
-	        local luasnip = require('luasnip')
-                if cmp.visible() then
-                  cmp.select_next_item()
-                elseif luasnip.expandable() then
-                  luasnip.expand()
-                elseif luasnip.expand_or_jumpable() then
-                  luasnip.expand_or_jump()
-                else
-                  fallback()
-                end
-              end
-            '';
-            modes = [ "i" "s" ];
-          };
-        };
+        settings = {
+	  sources = [
+	    {name = "nvim_lsp";}
+	    {name = "path";}
+	    {name = "buffer";}
+	    {name = "luasnip";}
+	  ];
+	  mapping = {
+	    "<CR>" = "cmp.mapping.confirm({ select = true })";
+	    "<Up>" = ''
+	      cmp.mapping(
+		function(fallback)
+		  if cmp.visible() then
+		    cmp.select_prev_item()
+		  else
+		    fallback()
+		  end
+		end, {"i", "s"})
+	      '';
+	    "<Down>" = ''
+	      cmp.mapping(
+		function(fallback)
+		  if cmp.visible() then
+		    cmp.select_next_item()
+		  else
+		    fallback()
+		  end
+		end, { "i", "s" })
+	      '';
+	    "<Tab>" = ''
+	      cmp.mapping(
+		function(fallback)
+		  local luasnip = require('luasnip')
+		  if cmp.visible() then
+		    cmp.select_next_item()
+		  elseif luasnip.expandable() then
+		    luasnip.expand()
+		  elseif luasnip.expand_or_jumpable() then
+		    luasnip.expand_or_jump()
+		  else
+		    fallback()
+		  end
+		end, { "i", "s" })
+	      '';
+	  };
+	};
       };
 
       # Status bar
@@ -162,15 +159,15 @@
 	# NOTE: Keymaps are simply remapped to "<cmd>Telescope <action><CR>"
 	keymaps = {
 	  "<leader>ff" = {
-	    desc = "Find files";
+	    options.desc = "Find files";
 	    action = "find_files";
 	  };
 	  "<leader>fg" = {
-	    desc = "Find with grep";
+	    options.desc = "Find with grep";
 	    action = "live_grep";
 	  };
 	  "<leader>fb" = {
-	    desc = "Find buffers";
+	    options.desc = "Find buffers";
 	    action = "buffers";
 	  };
 	};
@@ -185,7 +182,7 @@
       # Show indentation lines and highlight scope
       indent-blankline = {
 	enable = true;
-	extraOptions.scope = {
+	settings.scope = {
 	  show_start = false; # Disable scope start underline
 	};
       };
@@ -194,8 +191,18 @@
       conform-nvim = {
 	enable = true;
 
+	formatOnSave = ''
+	    function(bufnr)
+	      -- Disable with a global or buffer-local variable
+	      if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+		return
+	      end
+	      return { timeout_ms = 500, lsp_fallback = true }
+	    end
+	  '';
+
 	formattersByFt = {
-	  nix = [ "nixfmt" ];
+	  nix = [ "nixfmt-rfc-style" ];
 	  lua = [ "stylua" ];
 	  python = [ "isort" "black" ];
 	  javascript = [ "prettierd" ];
@@ -211,6 +218,7 @@
 	};
       };
 
+
       # Display color code colors
       nvim-colorizer = {
 	enable = true;
@@ -219,42 +227,38 @@
 
 
       # Notification UI
-      fidget = {
+      fidget.enable = true; 
+
+      # Comment utilities
+      comment.enable = true;
+
+      # Automatically close braces
+      autoclose = {
 	enable = true;
-	text.spinner = "triangle";
+	options.pairSpaces = true;
       };
     };
 
     # Plugins that aren't exposed through nixvim
-    extraPlugins = builtins.attrValues {
-      inherit (pkgs.vimPlugins)
-	comment-nvim # Comment utilities
-	friendly-snippets # Snippets for luasnip
-        autoclose-nvim; # Automatically close braces
-    };
+ #    extraPlugins = builtins.attrValues {
+ #      inherit (pkgs.vimPlugins)
+	# friendly-snippets; # Snippets for luasnip
+ #    };
+
+    # Packages that are required by plugins, like formatters
+    extraPackages = with pkgs; [
+      nixfmt-rfc-style
+      prettierd
+      stylua
+      isort
+      black
+      goimports-reviser
+      gofumpt
+    ];
 
     extraConfigLua = ''
       -- Timeout before keybind is triggered
       vim.opt.timeoutlen = 250
-
-      -- Setup extra plugins
-      require("Comment").setup()
-
-      require("autoclose").setup({
-        options = {
-	  pair_spaces = true;
-	}})
-
-      -- Need to use extra conf to pass custom format function
-      require("conform").setup({
-	    format_on_save = function(bufnr)
-	      -- Disable with a global or buffer-local variable
-	      if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
-		return
-	      end
-	      return { timeout_ms = 500, lsp_fallback = true }
-	    end,
-	  })
 
       -- Define commands to enable/disable format on save
       -- from https://github.com/stevearc/conform.nvim/blob/master/doc/recipes.md#command-to-toggle-format-on-save
@@ -375,6 +379,12 @@
 	key = "<leader>aE";
 	action = "<cmd>FormatEnable!<CR>";
 	options.desc = "Enable autoformat on save for buffer";
+      }
+      # Disable highlight
+      {
+	key = "<leader>h";
+	action = "<cmd>noh<CR>";
+	options.desc = "Turn off highlights";
       }
     ];
   };
