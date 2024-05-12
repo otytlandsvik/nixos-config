@@ -2,6 +2,7 @@
 
   imports = [
     inputs.nixvim.homeManagerModules.nixvim
+    ./formatters.nix
   ];
   programs.nixvim = {
     enable = true;
@@ -13,10 +14,11 @@
     colorschemes.tokyonight.enable = true;
 
     options = {
-      relativenumber = true;
       number = true; # Show actual line number instead of 0
+      relativenumber = true; # Relative line numbers
       autoread = true; # Reload files changed outside vim
       lazyredraw = true; # Redraw lazily
+      wrap = false; # Don't wrap lines by default
 
       # Indentation
       # autoindent = true;
@@ -29,17 +31,6 @@
       # expandtab = true;
     };
 
-    extraConfigLua = ''
-      -- Timeout before keybind is triggered
-      vim.opt.timeoutlen = 250
-
-      -- Setup extra plugins
-      require("Comment").setup()
-      require("autoclose").setup({
-        options = {
-	  pair_spaces = true;
-	}})
-      '';
 
     # Set leader key to space
     globals.mapleader = " "; 
@@ -191,10 +182,39 @@
       # Leader popup suggestions
       which-key.enable = true;
 
+      # Show indentation lines and highlight scope
+      indent-blankline = {
+	enable = true;
+	extraOptions.scope = {
+	  show_start = false; # Disable scope start underline
+	};
+      };
+
+      # Formatting
+      conform-nvim = {
+	enable = true;
+
+	formattersByFt = {
+	  nix = [ "nixfmt" ];
+	  lua = [ "stylua" ];
+	  python = [ "isort" "black" ];
+	  javascript = [ "prettierd" ];
+	  typescript = [ "prettierd" ];
+	  javascriptreact = [ "prettierd" ];
+	  typescriptreact = [ "prettierd" ];
+	  css = [ "prettierd" ];
+	  html = [ "prettierd" ];
+	  json = [ "prettierd" ];
+	  yaml = [ "prettierd" ];
+	  markdown = [ "prettierd" ];
+	  go = [ "goimports-reviser" "gofumpt" ];
+	};
+      };
+
       # Display color code colors
       nvim-colorizer = {
-        enable = true;
-	      fileTypes = [ "*" ];
+	enable = true;
+	fileTypes = [ "*" ];
       };
 
 
@@ -212,6 +232,55 @@
 	friendly-snippets # Snippets for luasnip
         autoclose-nvim; # Automatically close braces
     };
+
+    extraConfigLua = ''
+      -- Timeout before keybind is triggered
+      vim.opt.timeoutlen = 250
+
+      -- Setup extra plugins
+      require("Comment").setup()
+
+      require("autoclose").setup({
+        options = {
+	  pair_spaces = true;
+	}})
+
+      -- Need to use extra conf to pass custom format function
+      require("conform").setup({
+	    format_on_save = function(bufnr)
+	      -- Disable with a global or buffer-local variable
+	      if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+		return
+	      end
+	      return { timeout_ms = 500, lsp_fallback = true }
+	    end,
+	  })
+
+      -- Define commands to enable/disable format on save
+      -- from https://github.com/stevearc/conform.nvim/blob/master/doc/recipes.md#command-to-toggle-format-on-save
+      vim.api.nvim_create_user_command("FormatDisable", function(args)
+	if args.bang then
+	  -- FormatDisable! will disable only for current buffer
+	  vim.b.disable_autoformat = true
+	else
+	  vim.g.disable_autoformat = true
+	end
+      end, {
+	desc = "Disable autoformat on save",
+	bang = true,
+      })
+      vim.api.nvim_create_user_command("FormatEnable", function(args)
+	if args.bang then
+	  -- FormatEnable! will enable only for current buffer
+	  vim.b.disable_autoformat = false
+	else
+	  vim.g.disable_autoformat = false
+	end
+      end, {
+	desc = "Enable autoformat on save",
+	bang = true,
+      })
+      '';
 
     # Keymaps
     keymaps = [
@@ -273,7 +342,40 @@
 	action = "<cmd>hsplit";
 	options.desc = "Create new window, horizontal split";
       }
+      # Comment 
+      {
+	mode = [ "n" ];
+	key = "<C-_>"; # Ctrl + /
+	action = "gcc";
+	options.remap = true; # Needed for recursive keymap
+      }
+      {
+	mode = [ "v" ];
+	key = "<C-_>";
+	action = "gc";
+	options.remap = true;
+      }
+      # Autoformat on save
+      {
+	key = "<leader>ad";
+	action = "<cmd>FormatDisable<CR>";
+	options.desc = "Disable autoformat on save globally";
+      }
+      {
+	key = "<leader>aD";
+	action = "<cmd>FormatDisable!<CR>";
+	options.desc = "Disable autoformat on save for buffer";
+      }
+      {
+	key = "<leader>ae";
+	action = "<cmd>FormatEnable<CR>";
+	options.desc = "Enable autoformat on save globally";
+      }
+      {
+	key = "<leader>aE";
+	action = "<cmd>FormatEnable!<CR>";
+	options.desc = "Enable autoformat on save for buffer";
+      }
     ];
-
   };
 }
