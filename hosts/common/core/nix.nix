@@ -1,4 +1,4 @@
-{ inputs, config, lib, ... }:
+{ ... }:
 {
   nix = {
     settings = {
@@ -11,9 +11,12 @@
       auto-optimise-store = true;
 
       # Enable flakes
-      experimental-features = [ "nix-command" "flakes"];
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
     };
-    
+
     # Garbage collection
     # gc = {
     #   automatic = true;

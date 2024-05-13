@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 {
   imports = [
     # Packages with custom configs
@@ -27,12 +32,12 @@
   # Packages without custom configs
   home.packages = builtins.attrValues {
     inherit (pkgs)
-      
+
       eza # ls replacement
       fzf # Fuzzy find
       delta # Diff pager for git
       ripgrep # grep goodness
-      pfetch; # System info
+      pfetch # System info
+      ;
   };
-
 }

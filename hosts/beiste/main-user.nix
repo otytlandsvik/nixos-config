@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.main-user;
@@ -20,9 +25,12 @@ in
       isNormalUser = true;
       # initialPassword = "12345";
       description = "main user";
-      extraGroups = [ "networkmanager" "wheel" "audio" ];
+      extraGroups = [
+        "networkmanager"
+        "wheel"
+        "audio"
+      ];
       shell = pkgs.fish;
     };
   };
-
 }

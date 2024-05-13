@@ -1,6 +1,11 @@
-{ pkgs, lib, config, ... }: 
 {
-# NOTE: Sway may already be enabled from /hosts/ config
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+{
+  # NOTE: Sway may already be enabled from /hosts/ config
 
   # Sway related packages
   home.packages = with pkgs; [
@@ -18,26 +23,26 @@
 
       # Sway overrides xkb config from system
       input = {
-	"type:keyboard" = {
-	  xkb_layout = "us,no";
-	  xkb_variant = "altgr-intl,";
-	  xkb_options = "grp:win_space_toggle";
-	};
+        "type:keyboard" = {
+          xkb_layout = "us,no";
+          xkb_variant = "altgr-intl,";
+          xkb_options = "grp:win_space_toggle";
+        };
       };
 
-      keybindings = 
-	let
-	  cfg = config.wayland.windowManager.sway.config;
-	  mod = cfg.modifier;
-	in
-	# NOTE: mkOptionDefault to extend/override instead of overwriting all keybindings
-	lib.mkOptionDefault {
-	  # Engage swaylock
-	  "${mod}+Ctrl+l" = "exec swaylock -c 000000";
+      keybindings =
+        let
+          cfg = config.wayland.windowManager.sway.config;
+          mod = cfg.modifier;
+        in
+        # NOTE: mkOptionDefault to extend/override instead of overwriting all keybindings
+        lib.mkOptionDefault {
+          # Engage swaylock
+          "${mod}+Ctrl+l" = "exec swaylock -c 000000";
 
-	  # Screenshots
-	  "Print" = "exec shotman -c region";
-	};
+          # Screenshots
+          "Print" = "exec shotman -c region";
+        };
     };
   };
 

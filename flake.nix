@@ -19,13 +19,17 @@
     };
   };
 
-  outputs = { self, nixpkgs, ... }@inputs:
+  outputs =
+    { self, nixpkgs, ... }@inputs:
     let
       inherit (self) outputs;
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
-      specialArgs = { inherit inputs outputs nixpkgs; };
-    in {
+      specialArgs = {
+        inherit inputs outputs nixpkgs;
+      };
+    in
+    {
 
       nixosConfigurations = {
         beiste = nixpkgs.lib.nixosSystem {

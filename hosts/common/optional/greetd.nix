@@ -1,7 +1,7 @@
 # Greeter and display manager, to automatically go to
 # window manager on boot
 
-{ config, pkgs, lib, ... }:
+{ pkgs, ... }:
 
 {
   config = {

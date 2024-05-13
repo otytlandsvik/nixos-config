@@ -2,24 +2,22 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, inputs, ... }:
+{ pkgs, ... }:
 
 {
-  imports =
-    [ 
-      ################ Required ################
-      ./hardware-configuration.nix
-      ../common/core
+  imports = [
+    ################ Required ################
+    ./hardware-configuration.nix
+    ../common/core
 
-      ################ Host specific optionals ################
-      ../common/optional/sway.nix # Window manager
-      ../common/optional/pipewire.nix # Sound config
-      # ../common/optional/greetd.nix # Display manager
+    ################ Host specific optionals ################
+    ../common/optional/sway.nix # Window manager
+    ../common/optional/pipewire.nix # Sound config
+    # ../common/optional/greetd.nix # Display manager
 
-      ################ Users to create  ################
-      ../common/users/ole.nix
- 
-    ];
+    ################ Users to create  ################
+    ../common/users/ole.nix
+  ];
 
   # Bootloader.
   boot.loader.grub = {
@@ -70,5 +68,4 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.11"; # Did you read the comment?
-
 }

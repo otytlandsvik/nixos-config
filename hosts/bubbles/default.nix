@@ -1,21 +1,19 @@
 # Bubbles: slow desktop at uni
-{ config, pkgs, inputs, ... }:
+{ pkgs, ... }:
 {
-  imports =
-    [ 
-      ################ Required ################
-      ./hardware-configuration.nix
-      ../common/core
+  imports = [
+    ################ Required ################
+    ./hardware-configuration.nix
+    ../common/core
 
-      ################ Host specific optionals ################
-      ../common/optional/sway.nix # Window manager
-      ../common/optional/pipewire.nix # Sound config
-      # ../common/optional/greetd.nix # Display manager
+    ################ Host specific optionals ################
+    ../common/optional/sway.nix # Window manager
+    ../common/optional/pipewire.nix # Sound config
+    # ../common/optional/greetd.nix # Display manager
 
-      ################ Users to create  ################
-      ../common/users/ole.nix
- 
-    ];
+    ################ Users to create  ################
+    ../common/users/ole.nix
+  ];
 
   # Use systemd for linux-only machine
   boot.loader = {
@@ -24,7 +22,7 @@
     timeout = 3;
   };
 
-  networking.hostName = "bubbles"; 
+  networking.hostName = "bubbles";
 
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
@@ -34,5 +32,4 @@
   ];
 
   system.stateVersion = "23.11";
-
 }
