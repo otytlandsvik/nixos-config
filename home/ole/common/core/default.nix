@@ -11,6 +11,7 @@
     ./lazygit.nix
     ./nixvim
     ./fonts.nix
+    ./fish.nix
   ]; # ++ (builtins.attrValues outputs.homeManagerModules);
 
   # Let home manager install and manage itself
