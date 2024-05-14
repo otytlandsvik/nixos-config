@@ -12,10 +12,6 @@
       "git"
     ];
     shell = pkgs.fish; # Default shell
-    packages = [ pkgs.home-manager ];
+    packages = [ pkgs.home-manager ]; # To bootstrap dotfiles
   };
-
-  # Import home configs
-  # TODO: Allow hostname to be passed in for multiple home configs
-  home-manager.users."ole" = import ../../../home/ole/home.nix;
 }
