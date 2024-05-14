@@ -338,12 +338,12 @@
       }
       {
         key = "<leader>|";
-        action = "<cmd>vsplit";
+        action = "<cmd>vsplit<CR>";
         options.desc = "Create new window, vertical split";
       }
       {
         key = "<leader>-";
-        action = "<cmd>hsplit";
+        action = "<cmd>hsplit<CR>";
         options.desc = "Create new window, horizontal split";
       }
       # Comment 
