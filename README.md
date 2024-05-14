@@ -6,6 +6,7 @@ However, this config is separated from the home configuration; **it is only a sy
 **This config**:
 - Is _just_ a NixOS system config, very barebones and no user config (apart from initial setup)
 - Uses flakes
+- Uses the _unstable_ channel for nixpkgs
 - Is meant to be used with home manager as a standalone, non-root utility
 
 > [!TIP]
@@ -28,6 +29,8 @@ As a reminder to myself and as a resource to anyone seeking inspiration, here is
    $ git clone git@github.com:otytlandsvik/nixos-config.git
    ```
 6. Create a host specific config to bootstrap the new host under `nixos-config/hosts`. Simply copy another config as a template and setup specifics accordingly
+> [!WARNING]
+> Remember to copy the `hardware-configuration.nix` file that NixOS generated for your system! It should be at `/etx/nixos/`
 7. If you need another user, create one by using `nixos/config/hosts/common/users/ole` as a template
 8. Add the new host as an output in the flake
 9. Rebuild referencing this new output (as an example, if the new output was `hostname`:
