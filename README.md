@@ -30,7 +30,7 @@ As a reminder to myself and as a resource to anyone seeking inspiration, here is
    ```
 6. Create a host specific config to bootstrap the new host under `nixos-config/hosts`. Simply copy another config as a template and setup specifics accordingly
 > [!WARNING]
-> Remember to copy the `hardware-configuration.nix` file that NixOS generated for your system! It should be at `/etx/nixos/`
+> Remember to copy the `hardware-configuration.nix` file that NixOS generated for your system! It should be at `/etc/nixos/`
 7. If you need another user, create one by using `nixos/config/hosts/common/users/ole` as a template
 8. Add the new host as an output in the flake
 9. Rebuild referencing this new output (as an example, if the new output was `hostname`:
