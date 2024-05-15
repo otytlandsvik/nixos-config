@@ -1,7 +1,7 @@
 
 # My Personal NixOS config
 This is my personal nixos configuration. It is an attempt at a modular nix config structure to support multiple machines and even users. I've taken a fair amount of inspiration from [EmergentMind's config](https://github.com/EmergentMind/nix-config), as well as a heap of others I can't recall.
-However, this config is separated from the home configuration; **it is only a system config!** I use it in conjunction with my home manager config found in my dotfiles repo.
+However, this config is separated from the home configuration; **it is only a system config!** I use it in conjunction with my home manager config found in [my dotfiles repo](https://github.com/otytlandsvik/dotfiles).
 
 **This config**:
 - Is _just_ a NixOS system config, very barebones and no user config (apart from initial setup)
@@ -22,18 +22,28 @@ As a reminder to myself and as a resource to anyone seeking inspiration, here is
     $ nix-shell -p git
     ```
     
-    ...or add it to the default nixos config and rebuild
-4. Move to where you want your config. It can be anywhere, I currently have it in `~/nixos-config` (meaning I would run git clone in `~/`)
-5. Clone the repo:
+    ...or add it to the default nixos config and rebuild:
+   ```nix
+   # configuration.nix
+   environment.systemPackages = [
+       pkgs.git
+   ];
+   ```
+
+   ```sh
+   $ sudo nixos-rebuild switch
+   ```
+5. Move to where you want your config. It can be anywhere, I currently have it in `~/nixos-config` (meaning I would run git clone in `~/`)
+6. Clone the repo:
    ```sh
    $ git clone git@github.com:otytlandsvik/nixos-config.git
    ```
-6. Create a host specific config to bootstrap the new host under `nixos-config/hosts`. Simply copy another config as a template and setup specifics accordingly
+7. Create a host specific config to bootstrap the new host under `nixos-config/hosts`. Simply copy another config as a template and setup specifics accordingly
 > [!WARNING]
 > Remember to copy the `hardware-configuration.nix` file that NixOS generated for your system! It should be at `/etc/nixos/`
 7. If you need another user, create one by using `nixos/config/hosts/common/users/ole` as a template
 8. Add the new host as an output in the flake
-9. Rebuild referencing this new output (as an example, if the new output was `hostname`:
+9. Rebuild referencing this new output (as an example, if the new output was `hostname`):
    ```sh
    $ sudo nixos-rebuild switch --flake .#hostname
    ```
@@ -48,4 +58,4 @@ $ exec sway
 to start it. That's it for the system config!
 
 ### Home manager config
-To bootrap the home configuration for my user, follow the steps in my dotfiles repo.
+To bootrap the home configuration for my user, follow the steps in my [dotfiles repo](https://github.com/otytlandsvik/dotfiles).
