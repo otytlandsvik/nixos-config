@@ -1,8 +1,7 @@
-{ ... }:
+{ pkgs, ... }:
 {
   imports = [
     ./nix.nix # Nix settings
-    ./fish.nix # Default shell
   ];
 
   # Enable networking
@@ -25,6 +24,17 @@
   # Enable udev rule to flash new layouts to zsa keyboards
   hardware.keyboard.zsa.enable = true;
 
-  # Login manager
-  programs.regreet.enable = true;
+  ######## Core system packages ########
+  environment.systemPackages = with pkgs; [
+    vim
+    fish
+    wget
+    firefox
+    alacritty
+    regreet
+    git
+  ];
+
+  # Config was written using 23.11
+  system.stateVersion = "23.11";
 }

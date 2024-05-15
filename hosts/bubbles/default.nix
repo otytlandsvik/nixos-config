@@ -1,5 +1,5 @@
 # Bubbles: slow desktop at uni
-{ pkgs, ... }:
+{ ... }:
 {
   imports = [
     ################ Required ################
@@ -22,13 +22,4 @@
   };
 
   networking.hostName = "bubbles";
-
-  environment.systemPackages = with pkgs; [
-    vim
-    wget
-    firefox
-    alacritty
-  ];
-
-  system.stateVersion = "23.11";
 }
