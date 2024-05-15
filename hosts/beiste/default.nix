@@ -9,6 +9,7 @@
     ################ Host specific optionals ################
     ../common/optional/sway.nix # Window manager
     ../common/optional/pipewire.nix # Sound config
+    ../common/optional/regreet.nix # Login manager
 
     ################ Users to create  ################
     ../common/users/ole.nix
