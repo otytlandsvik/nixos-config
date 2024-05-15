@@ -26,14 +26,17 @@
 
   ######## Core system packages ########
   environment.systemPackages = with pkgs; [
-    vim
-    fish
     wget
     firefox
     alacritty
-    regreet
-    git
+    vim
   ];
+
+  # Apply default config to packages exposing a module
+  programs = {
+    fish.enable = true; # Default shell
+    git.enable = true;
+  };
 
   # Config was written using 23.11
   system.stateVersion = "23.11";
