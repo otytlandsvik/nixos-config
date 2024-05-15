@@ -22,6 +22,9 @@
     options = "grp:win_space_toggle";
   };
 
+  # Enable udev rule to flash new layouts to zsa keyboards
+  hardware.keyboard.zsa.enable = true;
+
   # Login manager
   programs.regreet.enable = true;
 }
