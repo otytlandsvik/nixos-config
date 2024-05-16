@@ -30,6 +30,7 @@
     firefox
     alacritty
     vim
+    nh # Nix helpers utility
   ];
 
   # Apply default config to packages exposing a module

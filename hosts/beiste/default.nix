@@ -22,8 +22,12 @@
     useOSProber = true;
   };
 
-  networking.hostName = "beiste"; # Define your hostname.
+  networking.hostName = "beiste";
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+
+  environment.sessionVariables = {
+    FLAKE = "~/nixos-config"; # Flake location for nh util
+  };
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";

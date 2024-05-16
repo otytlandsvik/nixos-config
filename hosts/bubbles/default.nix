@@ -23,4 +23,8 @@
   };
 
   networking.hostName = "bubbles";
+
+  environment.sessionVariables = {
+    FLAKE = "~/nixos-config"; # Flake location for nh util
+  };
 }
