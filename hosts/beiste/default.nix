@@ -1,5 +1,5 @@
 # Beiste: home desktop
-{ ... }:
+{ pkgs, ... }:
 {
   imports = [
     ################ Required ################
@@ -10,6 +10,7 @@
     ../common/optional/sway.nix # Window manager
     ../common/optional/pipewire.nix # Sound config
     ../common/optional/regreet.nix # Login manager
+    ../common/optional/blueman.nix # Bluetooth applet
 
     ################ Users to create  ################
     ../common/users/ole.nix
@@ -25,9 +26,29 @@
   networking.hostName = "beiste";
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
+  hardware.bluetooth = {
+    enable = true;
+    settings.General = {
+      Enable = "Source,Sink,Media,Socket";
+    };
+  };
+
   environment.sessionVariables = {
     FLAKE = "~/nixos-config"; # Flake location for nh util
   };
+
+  # For AMD GPU
+  services.xserver.videoDrivers = [ "amdgpu" ];
+
+  # Steam setup for gaming
+  programs.steam = {
+    enable = true;
+    gamescopeSession.enable = true;
+  };
+
+  programs.gamemode.enable = true;
+
+  environment.systemPackages = [ pkgs.protonup ];
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
