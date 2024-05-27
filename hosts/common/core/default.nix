@@ -39,6 +39,12 @@
     git.enable = true;
   };
 
+  # Enable docker
+  virtualisation.docker = {
+    enable = true;
+    rootless.enable = true;
+  };
+
   # Config was written using 23.11
   system.stateVersion = "23.11";
 }

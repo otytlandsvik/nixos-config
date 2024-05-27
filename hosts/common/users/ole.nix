@@ -10,6 +10,7 @@
       "wheel"
       "audio"
       "git"
+      "docker"
     ];
     shell = pkgs.fish; # Default shell
     packages = [ pkgs.home-manager ]; # To bootstrap dotfiles
