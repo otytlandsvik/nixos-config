@@ -28,6 +28,13 @@
           };
           modules = [ ./hosts/bubbles ];
         };
+        # Dell laptop
+        xps = nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit system;
+          };
+          modules = [ ./hosts/xps ];
+        };
       };
     };
 }
