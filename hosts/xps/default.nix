@@ -11,6 +11,7 @@
     ../common/optional/pipewire.nix # Sound config
     ../common/optional/blueman.nix # Bluetooth applet
     ../common/optional/regreet.nix # Login manager
+    ../common/optional/power.nix # Power/battery stuff
 
     ################ Users to create  ################
     ../common/users/ole.nix
