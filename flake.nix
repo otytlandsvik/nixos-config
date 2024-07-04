@@ -35,6 +35,13 @@
           };
           modules = [ ./hosts/xps ];
         };
+        # Work desktop
+        donkeykong = nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit system;
+          };
+          modules = [ ./hosts/donkeykong ];
+        };
       };
     };
 }
