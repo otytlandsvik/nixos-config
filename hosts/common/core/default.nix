@@ -24,6 +24,9 @@
   # Enable udev rule to flash new layouts to zsa keyboards
   hardware.keyboard.zsa.enable = true;
 
+  # Enable firmware update service
+  services.fwupd.enable = true;
+
   ######## Core system packages ########
   environment.systemPackages = with pkgs; [
     wget
