@@ -35,13 +35,20 @@
           };
           modules = [ ./hosts/xps ];
         };
-        # Work desktop
+        # Old work desktop
         donkeykong = nixpkgs.lib.nixosSystem {
           specialArgs = {
             inherit system;
           };
           modules = [ ./hosts/donkeykong ];
         };
+	# New work desktop
+	jzargo = nixpkgs.lib.nixosSystem {
+	  specialArgs = {
+	    inherit system;
+	  };
+	  modules = [ ./hosts/jzargo ];
+	};
       };
     };
 }
