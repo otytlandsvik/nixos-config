@@ -3,7 +3,7 @@
 
   inputs = {
     ############### Official nixos/hm sources ###############
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
   };
 
   outputs =
@@ -42,13 +42,13 @@
           };
           modules = [ ./hosts/donkeykong ];
         };
-	# New work desktop
-	jzargo = nixpkgs.lib.nixosSystem {
-	  specialArgs = {
-	    inherit system;
-	  };
-	  modules = [ ./hosts/jzargo ];
-	};
+        # New work desktop
+        jzargo = nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit system;
+          };
+          modules = [ ./hosts/jzargo ];
+        };
       };
     };
 }
