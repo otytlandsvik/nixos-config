@@ -7,7 +7,7 @@
     ../common/core
 
     ################ Host specific optionals ################
-    ../common/optional/sway.nix # Window manager
+    ../common/optional/hyprland.nix # Window manager
     ../common/optional/pipewire.nix # Sound config
     ../common/optional/blueman.nix # Bluetooth applet
     ../common/optional/regreet.nix # Login manager
@@ -27,5 +27,6 @@
 
   environment.sessionVariables = {
     FLAKE = "~/nixos-config"; # Flake location for nh util
+    NIXOS_OZONE_WL = 1; # Wayland hint for electron apps
   };
 }

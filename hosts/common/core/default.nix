@@ -34,6 +34,7 @@
     alacritty
     vim
     nh # Nix helpers utility
+    qmk-udev-rules
   ];
 
   # Apply default config to packages exposing a module
