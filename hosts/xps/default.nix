@@ -27,6 +27,5 @@
 
   environment.sessionVariables = {
     FLAKE = "~/nixos-config"; # Flake location for nh util
-    NIXOS_OZONE_WL = 1; # Wayland hint for electron apps
   };
 }
