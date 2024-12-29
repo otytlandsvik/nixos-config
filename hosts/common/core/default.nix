@@ -49,6 +49,12 @@
     rootless.enable = true;
   };
 
+  # Enable disk utilities
+  services = {
+    gvfs.enable = true;
+    udisks2.enable = true;
+  };
+
   # Config was written using 23.11
   system.stateVersion = "23.11";
 }
