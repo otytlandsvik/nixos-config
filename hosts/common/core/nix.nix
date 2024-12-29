@@ -10,10 +10,11 @@
       # Deduplicate and optimize nix store
       auto-optimise-store = true;
 
-      # Enable flakes
+      # Enable flakes and pipes
       experimental-features = [
         "nix-command"
         "flakes"
+        "pipe-operators"
       ];
     };
 
