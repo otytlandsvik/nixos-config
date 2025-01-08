@@ -7,10 +7,11 @@
     ../common/core
 
     ################ Host specific optionals ################
-    ../common/optional/sway.nix # Window manager
+    ../common/optional/hyprland.nix # Window manager
     ../common/optional/pipewire.nix # Sound config
     ../common/optional/regreet.nix # Login manager
     ../common/optional/blueman.nix # Bluetooth applet
+    ../common/optional/openssh.nix # SSH Daemon
 
     ################ Users to create  ################
     ../common/users/ole.nix
@@ -57,9 +58,6 @@
   # };
 
   # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
