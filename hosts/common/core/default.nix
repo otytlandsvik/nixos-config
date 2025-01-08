@@ -27,6 +27,13 @@
   # Enable firmware update service
   services.fwupd.enable = true;
 
+  # Prevent out of memory
+  services.earlyoom = {
+    enable = true;
+    freeMemThreshold = 5;
+    freeMemKillThreshold = 2;
+  };
+
   ######## Core system packages ########
   environment.systemPackages = with pkgs; [
     wget
