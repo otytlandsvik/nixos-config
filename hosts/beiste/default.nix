@@ -24,7 +24,6 @@
   };
 
   networking.hostName = "beiste";
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   hardware.bluetooth = {
     enable = true;
@@ -33,9 +32,7 @@
     };
   };
 
-  environment.sessionVariables = {
-    FLAKE = "~/nixos-config"; # Flake location for nh util
-  };
+  environment.sessionVariables = { };
 
   # For AMD GPU
   services.xserver.videoDrivers = [ "amdgpu" ];

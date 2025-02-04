@@ -25,7 +25,5 @@
 
   networking.hostName = "xps";
 
-  environment.sessionVariables = {
-    FLAKE = "~/nixos-config"; # Flake location for nh util
-  };
+  environment.sessionVariables = { };
 }

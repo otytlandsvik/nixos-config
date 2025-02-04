@@ -1,5 +1,5 @@
 # Beiste: home desktop
-{ pkgs, ... }:
+{ ... }:
 {
   imports = [
     ################ Required ################
@@ -32,7 +32,6 @@
   };
 
   networking.hostName = "jzargo";
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   hardware.bluetooth = {
     enable = true;
@@ -41,9 +40,7 @@
     };
   };
 
-  environment.sessionVariables = {
-    FLAKE = "~/nixos-config"; # Flake location for nh util
-  };
+  environment.sessionVariables = { };
 
   # Configure network proxy if necessary
   # networking.proxy.default = "http://user:password@proxy:port/";
