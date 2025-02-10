@@ -31,6 +31,15 @@
     };
   };
 
+  # DNS masking for Atlantis
+  services.dnsmasq = {
+    enable = true;
+    settings.address = [
+      "/.local/127.0.0.1"
+      "/.local.oceanbox.io/127.0.0.1"
+    ];
+  };
+
   networking.hostName = "jzargo";
 
   hardware.bluetooth = {
