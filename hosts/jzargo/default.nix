@@ -12,6 +12,7 @@
     ../common/optional/regreet.nix # Login manager
     ../common/optional/blueman.nix # Bluetooth applet
     ../common/optional/openssh.nix # SSH Daemon
+    ../common/optional/nix-ld.nix # Dynamic library patcher
 
     ################ Users to create  ################
     ../common/users/ole.nix
