@@ -13,6 +13,7 @@
     ../common/optional/blueman.nix # Bluetooth applet
     ../common/optional/openssh.nix # SSH Daemon
     ../common/optional/nix-ld.nix # Dynamic library patcher
+    ../common/optional/tailscale.nix # VPN
 
     ################ Users to create  ################
     ../common/users/ole.nix
