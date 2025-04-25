@@ -55,6 +55,13 @@
           };
           modules = [ ./hosts/jzargo ];
         };
+        # Oceanbox desktop
+        haddock = nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit system;
+          };
+          modules = [ ./hosts/haddock ];
+        };
       };
     };
 }
