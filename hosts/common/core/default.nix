@@ -48,6 +48,8 @@
   programs = {
     fish.enable = true; # Default shell
     git.enable = true;
+    # Automatically start ssh agent on login
+    ssh.startAgent = true;
   };
 
   # Enable docker
