@@ -3,7 +3,7 @@
 
   inputs = {
     ############### Official nixos/hm sources ###############
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
 
     ############### External sources  ###############
     nixos-hardware.url = "github:nixos/nixos-hardware/master";
