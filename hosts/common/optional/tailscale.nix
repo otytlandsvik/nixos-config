@@ -3,8 +3,8 @@ _: {
     enable = true;
     useRoutingFeatures = "client";
     extraUpFlags = [
-      "--login-server=https://hscl.t0.itpartner.no"
-      "--accept-dns"
+      "--login-server=https://headscale.svc.oceanbox.io"
+      "--accept-dns=true"
       "--accept-routes"
     ];
   };
