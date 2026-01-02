@@ -62,6 +62,18 @@
           };
           modules = [ ./hosts/haddock ];
         };
+        # New Oceanbox desktop
+        dipper = nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit system;
+          };
+          modules = [ 
+            ./hosts/dipper 
+            nixos-hardware.nixosModules.common-cpu-amd
+            nixos-hardware.nixosModules.common-cpu-amd-pstate
+            nixos-hardware.nixosModules.common-gpu-amd
+          ];
+        };
       };
     };
 }
