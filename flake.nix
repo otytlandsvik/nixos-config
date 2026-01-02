@@ -74,6 +74,17 @@
             nixos-hardware.nixosModules.common-gpu-amd
           ];
         };
+        # Oceanbox laptop
+        diver = nixpkgs.lib.nixosSystem {
+          specialArgs = {
+            inherit system;
+          };
+          modules = [
+            ./hosts/diver
+            # TODO: Use gen6 when available
+            nixos-hardware.nixosModules.lenovo-thinkpad-t14-amd-gen5
+          ];
+        };
       };
     };
 }
