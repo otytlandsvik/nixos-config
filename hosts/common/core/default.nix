@@ -24,6 +24,11 @@
   # Enable udev rule to flash new layouts to zsa keyboards
   hardware.keyboard.zsa.enable = true;
 
+  # Ploopy adept
+  services.udev.extraRules = ''
+    SUBSYSTEM=="hidraw", ATTRS{idProduct}=="5c47", ATTRS{idVendor}=="5043", MODE="0666"
+  '';
+
   # Enable firmware update service
   services.fwupd.enable = true;
 
