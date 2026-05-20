@@ -7,7 +7,7 @@
     ../common/core
 
     ################ Host specific optionals ################
-    ../common/optional/hyprland.nix # Window manager
+    ../common/optional/niri.nix # Window manager
     ../common/optional/pipewire.nix # Sound config
     ../common/optional/blueman.nix # Bluetooth applet
     ../common/optional/regreet.nix # Login manager
