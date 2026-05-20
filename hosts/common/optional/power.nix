@@ -10,5 +10,5 @@
   powerManagement.cpuFreqGovernor = "powersave";
 
   # Avoid shutting down on power button short press
-  services.logind.powerKey = "ignore";
+  services.logind.settings.Login.HandlePowerKey = "ignore";
 }
