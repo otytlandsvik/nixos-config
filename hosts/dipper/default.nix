@@ -1,5 +1,8 @@
 # Dipper: work desktop
-{ ... }:
+{ inputs, system, ... }:
+let
+  unstable-pkgs = import inputs.unstable { inherit system; };
+in
 {
   imports = [
     ################ Required ################
@@ -7,7 +10,7 @@
     ../common/core
 
     ################ Host specific optionals ################
-    ../common/optional/hyprland.nix # Window manager
+    ../common/optional/niri.nix # Window manager
     ../common/optional/pipewire.nix # Sound config
     ../common/optional/regreet.nix # Login manager
     ../common/optional/blueman.nix # Bluetooth applet
@@ -32,16 +35,15 @@
       preLVM = true;
       allowDiscards = true;
     };
+    # FIXME: temporary fix to a bt bug: https://github.com/NixOS/nixpkgs/issues/521528
+    kernelPackages = unstable-pkgs.linuxPackages_latest;
   };
 
   networking.hostName = "dipper";
 
-  hardware.bluetooth = {
-    enable = true;
-    settings.General = {
-      Enable = "Source,Sink,Media,Socket";
-    };
-  };
+  services.hardware.bolt.enable = true;
+
+  services.power-profiles-daemon.enable = true;
 
   environment.sessionVariables = { };
 }

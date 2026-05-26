@@ -4,13 +4,14 @@
   inputs = {
     ############### Official nixos/hm sources ###############
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
+    unstable.url ="github:nixos/nixpkgs/nixos-unstable";
 
     ############### External sources  ###############
     nixos-hardware.url = "github:nixos/nixos-hardware/master";
   };
 
   outputs =
-    { nixpkgs, nixos-hardware, ... }:
+    inputs @ { nixpkgs, nixos-hardware, ... }:
     let
       system = "x86_64-linux";
     in
@@ -66,6 +67,7 @@
         dipper = nixpkgs.lib.nixosSystem {
           specialArgs = {
             inherit system;
+            inherit inputs;
           };
           modules = [ 
             ./hosts/dipper 
