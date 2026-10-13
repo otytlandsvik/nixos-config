@@ -35,7 +35,7 @@ in
       allowDiscards = true;
     };
     # FIXME: temporary fix to a bt bug: https://github.com/NixOS/nixpkgs/issues/521528
-    kernelPackages = unstable-pkgs.linuxKernel.packages.linux_7_1;
+    kernelPackages = unstable-pkgs.linuxKernel.packages.linux_7_2;
   };
 
   networking.hostName = "diver";

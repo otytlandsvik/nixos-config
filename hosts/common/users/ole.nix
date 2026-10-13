@@ -11,8 +11,10 @@
       "audio"
       "git"
       "docker"
+      "plugdev"
     ];
     shell = pkgs.fish; # Default shell
     packages = [ pkgs.home-manager ]; # To bootstrap dotfiles
   };
+  users.groups.plugdev = {};
 }
