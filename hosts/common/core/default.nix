@@ -69,6 +69,12 @@
     udisks2.enable = true;
   };
 
+  # Distrust compromised CAs
+  security.pki.caCertificateBlacklist = [
+    "Comodo AAA Services root"
+    "emSign ECC Root CA - G3"
+  ];
+
   # Config was written using 23.11
   system.stateVersion = "23.11";
 }

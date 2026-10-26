@@ -26,6 +26,7 @@ in
   boot = {
     loader = {
       systemd-boot.enable = true;
+      systemd-boot.configurationLimit = 5;
       efi.canTouchEfiVariables = true;
       timeout = 3;
     };
@@ -35,8 +36,6 @@ in
       preLVM = true;
       allowDiscards = true;
     };
-    # FIXME: temporary fix to a bt bug: https://github.com/NixOS/nixpkgs/issues/521528
-    kernelPackages = unstable-pkgs.linuxKernel.packages.linux_7_1;
   };
 
   networking.hostName = "dipper";
